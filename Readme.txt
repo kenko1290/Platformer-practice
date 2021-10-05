@@ -1,1 +1,1 @@
-This is an exercise in using the pygame module of python. The program is a platofrmer game. Jump on platforms to stay alive.
+This is an exercise in using the pygame module of python. The program is a platformer game. Jump on platforms to stay alive.
