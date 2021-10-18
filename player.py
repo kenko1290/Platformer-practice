@@ -24,26 +24,31 @@ class Player(pygame.sprite.Sprite):     #Player class extends Sprite
 
         #creates a rectangle with the size of the surface and bottom at bottom center of screen
         self.rect = self.surf.get_rect(midbottom = (screen_width/2, 5*screen_height/6),)
-        #self.rect = pygame.Rect(self.surf.get_rect().left, self.surf.get_rect().bottom, 50,5)
-        self.rect.inflate_ip(-5, -20)
-        self.rect.midbottom = (200,200)
-        
+        #reduces the player hitbox width by 10 pixels and height by 39 pixels, leaving a 14 pixel width and 1 pixel height for the hitbox
+        self.rect.inflate_ip(-10,-39)
+
+        self.canJump = False
+        self.jumping = 0
+    
     # Move the sprite based on user keypresses. Looks up the given keystrokes in the user_input
     # dictionary and whether that key is pressed or not
     def move(self, user_input):
         #if user_input[K_UP]:
             #self.rect.move_ip(0, -5)
         if user_input[K_LEFT]:
-            self.rect.move_ip(-10, 0)
-        #if user_input[K_DOWN]:
-            #self.rect.move_ip(0, 5)
+            self.rect.move_ip(-25, 0)
+        if user_input[K_DOWN]:
+            self.rect.move_ip(0, 5)
         if user_input[K_RIGHT]:
-            self.rect.move_ip(10, 0)
+            self.rect.move_ip(25, 0)
+        # continues moving up to mimic momentum of jump
+        if self.jumping > 0:
+            self.rect.move_ip(0,-40)
+            self.jumping -= 1
         if user_input[K_SPACE]:
-            #for i in range(10):
-                #velocity = 20 - 2*i
-                #self.rect.move_ip(0,-velocity)
-           self.rect.move_ip(0,-30) 
+            if(self.canJump == True):
+                self.jumping = 17
+                self.canJump = False
 
         #keeps player within boundaries of screen
         if self.rect.left < 0:
@@ -55,7 +60,6 @@ class Player(pygame.sprite.Sprite):     #Player class extends Sprite
             #self.kill()
         if self.rect.top < 0:
             self.rect.top = 0
-
-
+        
     def fall(self):    #does not take any user input       
-        self.rect.move_ip(0,15)
+        self.rect.move_ip(0,20)

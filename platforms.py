@@ -33,6 +33,6 @@ class Platforms(pygame.sprite.Sprite):     #Platform class extends Sprite
     # Move the sprite based on speed
     # Remove the sprite when it passes the bottom of the screen
     def fall(self):
-        self.rect.move_ip(0, 5)
+        self.rect.move_ip(0, 3)
         if self.rect.top > screen_height:
             self.kill()
