@@ -79,23 +79,26 @@ while running and player.alive():
     
     collide_list = pygame.sprite.spritecollide(player, platform_sprites, False)
     for collide in collide_list:
+        player.left_vel = 0
+        player.right_vel = 0
+        player.fall_vel = 0
         player.canJump = True
         #if there's any collisions, player will stay on top of platform as long as player was
         #already above the top of platform when collision occurred
-        if(player.rect.bottom >= collide.rect.top and player.rect.top - 20 <= collide.rect.top):
+        if(player.rect.bottom >= collide.rect.top and player.rect.top - 30 <= collide.rect.top):
             player.rect.bottom = collide.rect.top
         #stops players from passing through the sides of platforms
         if(player.rect.left <= collide.rect.right and player.rect.right >= collide.rect.right and player.rect.top >= collide.rect.top):
             player.rect.left = collide.rect.right
         if(player.rect.right >= collide.rect.left and player.rect.left <= collide.rect.left and player.rect.top >= collide.rect.top):
-            player.rect.right = collide.rect.left   
+            player.rect.right = collide.rect.left
 
     screen.fill((135,206,250))
     draw_text(screen, "SCORE", 20, screen_width/ 2, 2)
     draw_text(screen, str(score), 20, screen_width/ 2, 15)
 
     #draws the player rectangle at updated top left corner coordinates (coordinates updated due to smaller hitbox)
-    screen.blit(player.surf, (player.rect.left-5,player.rect.top - 37))
+    screen.blit(player.surf, (player.rect.left-5,player.rect.top - 33))
 
     for platforms in platform_sprites:
         platforms.fall()
